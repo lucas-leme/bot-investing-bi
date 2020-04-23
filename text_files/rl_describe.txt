@@ -1,0 +1,7 @@
+O Aprendizado por Reforço é uma das áreas mais únicas do Aprendizado de Máquina, fundamentada em ensinar a um agente como agir em um ambiente a partir de suas
+experiências. O grande objetivo desse campo é programar algoritmos que aprendam
+quais as melhores ações a se tomar com base no feedback de ações passadas. Esse
+conceito é aplicado em diversos tipos de projeto, desde controlar um robô até criar
+inteligências superiores a seres humanos em jogos como xadrez.A área de foco de Aprendizado de Reforço busca estudar a base teórica desse campo, entender o
+avanço dos algoritmos de agentes, e aplicar modelos modernos e antigos em projetos de área. Para cumprir esse propósito, o grupo pesquisa e utiliza novos métodos de aprendizado, modela os próprios ambientes para projetos internos, e coloca em prática as ideias de artigos deste âmbito.
+Atual líder: Fernando Matsumoto
