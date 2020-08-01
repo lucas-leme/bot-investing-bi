@@ -1,7 +1,8 @@
 import time
 import telebot
+import os
 
-TOKEN = "your bot token here"
+TOKEN = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token=TOKEN)
 
 def findat(msg):
