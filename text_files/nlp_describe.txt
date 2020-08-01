@@ -1,7 +1,0 @@
-Processamento de Linguagem Natural é uma área da inteligência artificial cujo objetivo é a interpretação e manipulação de linguagens humanas. NLP tem muitas tarefas, algumas se relacionam ao processamento mais imediato dos componentes linguísticos, como a análise sintática, morfossintática (POS Tagging), lematização etc. Outras,
-mais complexas, estão relacionadas a problemas de nível superior. Algumas dessas
-são: extração de informação, classificação de texto, análise de sentimentos, tradução
-automática, dentre outras coisas.
-A área recentemente concluiu um projeto para classificar os heterônimos do escritor Fernando Pessoa. Atualmente, estamos trabalhando em um projeto de análise de sentimentos de populações e suas
-relações com o combate ao coronavírus.
-Atual líder: Julia Pocciotti

@@ -5,7 +5,7 @@ redis
 requests==2.16.5
 
 # Or you need not a pip package, @'...' specifies git branch
-git+https://github.com/GrupoTuring/bot-telegram.git
+git+https://github.com/Kylmakalle/pyTelegramBotAPI.git@feature-BotAPIV3
 
 # Or you have .zip library
 https://site.org/files/package.zip
