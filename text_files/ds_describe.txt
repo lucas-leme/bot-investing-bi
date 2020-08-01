@@ -1,0 +1,9 @@
+Data Science (ou Ciência de Dados) é sobre obter insights ou conhecimento através
+do estudo e análise de dados, fazendo uso de ferramentas tais como Machine Learning,
+Estatística e/ou Engenharia em um grande volume de dados coletados.
+Os três pilares que sustentam a Ciência de Dados são:
+• Estatística/Matemática
+• Ciência da Computação/TI
+• Business Intelligence (BI)
+Atualmente, estamos focados em realizar projetos, típicos da atmosfera de Ciência de Dados. Estamos realizando competições online e buscando parcerias com ONGs e instituições para tentarmos aplicar nosso conhecimentos para a resolução de problemas desses grupos.
+Atual líder: Victor Jinsi
