@@ -1,10 +1,16 @@
-# Funções do Alan
 import telebot
-# Insira o token
 import os
-Token = os.environ['TELEGRAM_TOKEN']
+import logging
+import os
+import random
+import sys
 
-bot = telebot.TeleBot(Token)
+import telegram
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
+TOKEN = os.environ['TELEGRAM_TOKEN']
+
+bot = telebot.TeleBot(TOKEN)
 
 def run(updater):
     PORT = int(os.environ.get("PORT", "8443"))
