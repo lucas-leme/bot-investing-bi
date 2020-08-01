@@ -6,6 +6,16 @@ Token = os.environ['TELEGRAM_TOKEN']
 
 bot = telebot.TeleBot(Token)
 
+def run(updater):
+    PORT = int(os.environ.get("PORT", "8443"))
+    HEROKU_APP_NAME = os.environ.get("bot-telegram-turing")
+    # Code from https://github.com/python-telegram-bot/python-telegram-bot/wiki/Webhooks#heroku
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=TOKEN)
+    updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
+    updater.idle()
+
 @bot.message_handler(commands=['start', 'help'])
 @bot.message_handler(commands=['help'])
 def send_welcome(message):
@@ -57,3 +67,11 @@ def handle_message(message):
 def handle_docs_audio(message):
     bot.reply_to(message, "Oloko mandou a braba")
 bot.polling()
+
+if __name__ == '__main__':
+    updater = Updater(TOKEN, use_context=True)
+
+    updater.dispatcher.add_handler(CommandHandler("start", start_handler))
+    updater.dispatcher.add_handler(CommandHandler("random", random_handler))
+
+    run(updater)
