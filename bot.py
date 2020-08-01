@@ -1,9 +1,10 @@
 # Funções do Alan
 
 import telebot
+import os
 
 # Insira o token
-Token = ""
+Token = os.environ[TELEGRAM_TOKEN]
 
 bot = telebot.TeleBot(Token)
 
