@@ -66,3 +66,5 @@ def main():
     updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
     updater.idle()
 
+if __name__ == '__main__':
+    main()
