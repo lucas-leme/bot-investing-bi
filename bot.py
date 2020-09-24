@@ -67,12 +67,7 @@ def handle_message(message):
 @bot.message_handler(content_types=['document'])
 def handle_docs_audio(message):
     bot.reply_to(message, "Oloko mandou a braba")
+
+
+    
 bot.polling()
-
-if __name__ == '__main__':
-    updater = Updater(TOKEN, use_context=True)
-
-    updater.dispatcher.add_handler(CommandHandler("start", start_handler))
-    updater.dispatcher.add_handler(CommandHandler("random", random_handler))
-
-    run(updater)
