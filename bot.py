@@ -5,6 +5,8 @@ import json
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
+from texts import get_manual_do_membro
+
 TOKEN = os.environ['TELEGRAM_TOKEN']
 PORT = int(os.environ.get("PORT", "8443"))
 HEROKU_APP_NAME = os.environ.get("bot-telegram-turing")
@@ -18,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 # /help
 def send_help(update, context):
-    update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds")
+    update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds; /gpt2; /q&a")
 
 # Descrição das Areas de foco
 
@@ -64,6 +66,18 @@ def gpt2_reply(update, context):
 
     update.message.reply_text(text)
 
+def turing_qa(update, context):
+    API_URL = "https://api-inference.huggingface.co/models/mrm8488/bert-base-portuguese-cased-finetuned-squad-v1-pt"
+
+    payload = json.dumps({
+        "context": get_manual_do_membro(),
+        "question": update.message.text
+    })
+
+    response = requests.post(API_URL, payload)
+
+    update.message.reply_text(response.json()['answer'])
+
 def main():
     logger.info("Bot started")
 
@@ -84,6 +98,7 @@ def main():
     dp.add_handler(CommandHandler("rl", send_rl_describe))
 
     dp.add_handler(CommandHandler("gpt2", gpt2_reply))
+    dp.add_handler(CommandHandler("q&a", turing_qa))
 
 
     dp.add_handler(MessageHandler(Filters.text, echo))
