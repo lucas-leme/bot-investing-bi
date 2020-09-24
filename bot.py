@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 # /help
-def send_welcome(update, context):
+def send_help(update, context):
     update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds")
 
 # Descrição das Areas de foco
@@ -63,7 +63,7 @@ def main():
     logger.info("working till here")
 
     dp.add_handler(CommandHandler("start", send_welcome))
-    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("help", send_help))
 
     dp.add_handler(CommandHandler("quant", send_quant_describe))
     dp.add_handler(CommandHandler("nlp", send_nlp_describe))
