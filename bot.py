@@ -7,6 +7,12 @@ TOKEN = os.environ['TELEGRAM_TOKEN']
 PORT = int(os.environ.get("PORT", "8443"))
 HEROKU_APP_NAME = os.environ.get("bot-telegram-turing")
 
+# Enable logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+
 
 # /help
 def send_welcome(update, context):
