@@ -53,11 +53,14 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def main():
+    logger.info("Bot started")
 
     updater = Updater(
         TOKEN, use_context=True)
 
     dp = updater.dispatcher
+
+    logger.info("working till here")
 
     dp.add_handler(CommandHandler("start", send_welcome))
     dp.add_handler(CommandHandler("help", help))
@@ -79,8 +82,6 @@ def main():
     updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
 
     updater.start_polling()
-
-    updater.idle()
 
 if __name__ == '__main__':
     main()
