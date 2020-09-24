@@ -1,10 +1,6 @@
-import os
 import logging
 import os
-import random
-import sys
 
-import telegram
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 TOKEN = os.environ['TELEGRAM_TOKEN']
@@ -42,6 +38,13 @@ def send_ds_describe(update, context):
 def send_welcome(update, context):
     update.message.reply_text("Salve, Salve Grupo Turing!")
 
+def echo(update, context):
+    """Echo the user message."""
+    update.message.reply_text(update.message.text)
+
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def main():
 
@@ -58,6 +61,10 @@ def main():
     dp.add_handler(CommandHandler("ds", send_ds_describe))
     dp.add_handler(CommandHandler("cv", send_cv_describe))
     dp.add_handler(CommandHandler("rl", send_rl_describe))
+
+    dp.add_handler(MessageHandler(Filters.text, echo))
+
+    dp.add_error_handler(error)
 
     
     updater.start_webhook(listen="0.0.0.0",
