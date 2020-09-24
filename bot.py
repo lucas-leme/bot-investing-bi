@@ -79,9 +79,14 @@ def main():
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
                           url_path=TOKEN)
-    updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
+    updater.bot.set_webhook("https://bot-telegram-turing.herokuapp.com/" + TOKEN)
+
+    logger.info("Listening for messages...")
 
     updater.start_polling()
+    updater.idle()
+
+    
 
 if __name__ == '__main__':
     main()
