@@ -60,7 +60,7 @@ def gpt2_reply(update, context):
 
     response = requests.post(GPT2_API_URL, payload_input_text)
 
-    text = str(response.json()[0])[20:-3]
+    text = str(response.json()[0])[20:-2]
 
     update.message.reply_text(text)
 
