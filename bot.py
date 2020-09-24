@@ -1,4 +1,3 @@
-import telebot
 import os
 import logging
 import os
@@ -9,65 +8,61 @@ import telegram
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 TOKEN = os.environ['TELEGRAM_TOKEN']
+PORT = int(os.environ.get("PORT", "8443"))
+HEROKU_APP_NAME = os.environ.get("bot-telegram-turing")
 
-bot = telebot.TeleBot(TOKEN)
 
-def run(updater):
-    PORT = int(os.environ.get("PORT", "8443"))
-    HEROKU_APP_NAME = os.environ.get("bot-telegram-turing")
-    # Code from https://github.com/python-telegram-bot/python-telegram-bot/wiki/Webhooks#heroku
+# /help
+def send_welcome(update, context):
+    update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds")
+
+# Descrição das Areas de foco
+
+# /quant
+def send_quant_describe(update, context):
+    update.message.reply_text('Essa área de foco tem como principal objetivo estudar as aplicações de programação no mercado financeiro, através de determinadas plataformas. Buscamos, juntos, aprender tanto sobre mercado financeiro quanto sobre aplicações e métodos quantitativos utilizados nesse mercado.')
+
+# /nlp
+def send_nlp_describe(update, context):
+    update.message.reply_text('Processamento de Linguagem Natural é uma área da inteligência artificial cujo objetivo é a interpretação e manipulação de linguagens humanas. NLP tem muitas tarefas, algumas se relacionam ao processamento mais imediato dos componentes linguísticos, como a análise sintática, morfossintática (POS Tagging), lematização etc.')
+
+# /cv
+def send_cv_describe(update, context):
+    update.message.reply_text('Em Computer Vision (ou Visão Computacional) trabalhamos principalmente com o processamento de imagens.')
+
+# /rl
+def send_rl_describe(update, context):
+    update.message.reply_text('O Aprendizado por Reforço é uma das áreas mais únicas do Aprendizado de Máquina, fundamentada em ensinar a um agente como agir em um ambiente a partir de suas experiências.')
+
+# /ds
+def send_ds_describe(update, context):
+    update.message.reply_text('Data Science (ou Ciência de Dados) é sobre obter insights ou conhecimento através do estudo e análise de dados')
+
+# /start
+def send_welcome(update, context):
+    update.message.reply_text("Salve, Salve Grupo Turing!")
+
+
+def main():
+
+    updater = Updater(
+        TOKEN, use_context=True)
+
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler("start", send_welcome))
+    dp.add_handler(CommandHandler("help", help))
+
+    dp.add_handler(CommandHandler("quant", send_quant_describe))
+    dp.add_handler(CommandHandler("nlp", send_nlp_describe))
+    dp.add_handler(CommandHandler("ds", send_ds_describe))
+    dp.add_handler(CommandHandler("cv", send_cv_describe))
+    dp.add_handler(CommandHandler("rl", send_rl_describe))
+
+    
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
                           url_path=TOKEN)
     updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
     updater.idle()
 
-@bot.message_handler(commands=['start', 'help'])
-@bot.message_handler(commands=['help'])
-def send_welcome(message):
-    bot.reply_to(message, "Comandos: /quant; /nlp; /cv; /rl; /ds")
-
-
-# Descrição das Areas de foco
-
-#quant
-@bot.message_handler(commands=['quant'])
-def send_quant_describe(message):
-    bot.reply_to(message, 'Essa área de foco tem como principal objetivo estudar as aplicações de programação no mercado financeiro, através de determinadas plataformas. Buscamos, juntos, aprender tanto sobre mercado financeiro quanto sobre aplicações e métodos quantitativos utilizados nesse mercado.')
-
-#nlp
-@bot.message_handler(commands=['nlp'])
-def send_nlp_describe(message):
-    bot.reply_to(message, 'Processamento de Linguagem Natural é uma área da inteligência artificial cujo objetivo é a interpretação e manipulação de linguagens humanas. NLP tem muitas tarefas, algumas se relacionam ao processamento mais imediato dos componentes linguísticos, como a análise sintática, morfossintática (POS Tagging), lematização etc.')
-
-#cv
-@bot.message_handler(commands=['cv'])
-def send_cv_describe(message):
-    bot.reply_to(message, 'Em Computer Vision (ou Visão Computacional) trabalhamos principalmente com o processamento de imagens.')
-
-#rl
-@bot.message_handler(commands=['rl'])
-def send_rl_describe(message):
-    bot.reply_to(message, 'O Aprendizado por Reforço é uma das áreas mais únicas do Aprendizado de Máquina, fundamentada em ensinar a um agente como agir em um ambiente a partir de suas experiências.')
-
-#ds
-@bot.message_handler(commands=['ds'])
-def send_ds_describe(message):
-    bot.reply_to(message, 'Data Science (ou Ciência de Dados) é sobre obter insights ou conhecimento através do estudo e análise de dados')
-
-
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    bot.reply_to(message, "Salve, Salve Grupo Turing!")
-
-@bot.message_handler(regexp="Pistola")
-def handle_message(message):
-    bot.reply_to(message, "Vc quis dizer Azank??")
-    
-@bot.message_handler(content_types=['document'])
-def handle_docs_audio(message):
-    bot.reply_to(message, "Oloko mandou a braba")
-
-
-    
-bot.polling()
