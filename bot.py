@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 # /help
 def send_help(update, context):
-    update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds; /gpt2; /q&a")
+    update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds; /gpt2; /qa")
 
 # Descrição das Areas de foco
 
@@ -98,7 +98,7 @@ def main():
     dp.add_handler(CommandHandler("rl", send_rl_describe))
 
     dp.add_handler(CommandHandler("gpt2", gpt2_reply))
-    dp.add_handler(CommandHandler("q&a", turing_qa))
+    dp.add_handler(CommandHandler("qa", turing_qa))
 
 
     dp.add_handler(MessageHandler(Filters.text, echo))
