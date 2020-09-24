@@ -83,6 +83,9 @@ def main():
     dp.add_handler(CommandHandler("cv", send_cv_describe))
     dp.add_handler(CommandHandler("rl", send_rl_describe))
 
+    dp.add_handler(CommandHandler("gpt2", gpt2_reply))
+
+
     dp.add_handler(MessageHandler(Filters.text, echo))
 
     dp.add_error_handler(error)
