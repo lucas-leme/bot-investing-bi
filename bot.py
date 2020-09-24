@@ -1,5 +1,7 @@
 import logging
 import os
+import requests
+import json
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
@@ -51,6 +53,16 @@ def echo(update, context):
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
+
+def gpt2_reply(update, context):
+    GPT2_API_URL = "https://api-inference.huggingface.co/models/pierreguillou/gpt2-small-portuguese"
+    payload_input_text =  json.dumps(update.message.text)
+
+    response = requests.post(GPT2_API_URL, payload_input_text)
+
+    text = str(response.json()[0])[20:-3]
+
+    update.message.reply_text(text)
 
 def main():
     logger.info("Bot started")
