@@ -9,7 +9,7 @@ from texts import get_manual_do_membro
 
 TOKEN = os.environ['TELEGRAM_TOKEN']
 PORT = int(os.environ.get("PORT", "8443"))
-HEROKU_APP_NAME = os.environ.get("bot-telegram-turing")
+HEROKU_APP_NAME = os.environ.get("bot-investing-bi")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -109,7 +109,7 @@ def main():
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
                           url_path=TOKEN)
-    updater.bot.set_webhook("https://bot-telegram-turing.herokuapp.com/" + TOKEN)
+    updater.bot.set_webhook("https://bot-investing-bi.herokuapp.com/" + TOKEN)
 
     logger.info("Listening for messages...")
 
