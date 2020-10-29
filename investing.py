@@ -5,6 +5,7 @@ import scipy.cluster.hierarchy as shc
 import numpy as np
 from pypfopt.hierarchical_portfolio import HRPOpt
 import json
+import matplotlib.pyplot as plt
 
 def get_investiments_returns(pct_change_window=1):
 
@@ -51,7 +52,13 @@ def get_investiments_last_period_performace(window = 1):
     report = 'Valores percentuais: \n' + last_returns.to_string() + '\n'
     report = report + 'Última data disponível: ' + get_last_date_available(returns)
 
-    return report
+
+    returns.plot()
+
+    image_path = 'plt.png'
+    plt.savefig(image_path)
+
+    return report, image_path
 
 
 def optimize_portfolio():

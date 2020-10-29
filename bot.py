@@ -37,8 +37,11 @@ def error(update, context):
 def last_returns(update, context):
     try:
         window = int(update.message.text[8:])
-        text = get_investiments_last_period_performace(window)
+        text, image_path = get_investiments_last_period_performace(window)
         update.message.reply_text(text)  
+        update.message.reply_photo(image_path)
+
+        os.remove(image_path)
     except:
         update.message.reply_text('Erro no comando: /returns PERÍODOS') 
 
