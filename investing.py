@@ -23,7 +23,7 @@ def get_investiments_returns(pct_change_window=1):
         prices = inv.get_fund_historical_data(fund, country='brazil', from_date='01/01/2018', to_date=today)
         close_prices.append(prices.Close)
     
-    asset_names = ['BCFF11', 'Google', 'Apple', 'Zarathustra', 'ARX', 'Alaska', 'Constellation']
+    assets_names = ['BCFF11', 'Google', 'Apple', 'Zarathustra', 'ARX', 'Alaska', 'Constellation']
 
     prices = pd.concat(close_prices, axis=1)
     prices = prices.dropna()
