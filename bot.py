@@ -5,7 +5,7 @@ import json
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from investing import get_investiments_last_period_performace
+from investing import get_investiments_last_period_performace, optimize_portfolio
 
 TOKEN = os.environ['TELEGRAM_TOKEN']
 PORT = int(os.environ.get("PORT", "8443"))
@@ -20,9 +20,7 @@ logger = logging.getLogger(__name__)
 
 # /help
 def send_help(update, context):
-    update.message.reply_text("Comandos: /quant; /nlp; /cv; /rl; /ds; /gpt2; /qa")
-
-# Descrição das Areas de foco
+    update.message.reply_text("Comandos: /return período; /optimize")
 
 # /start
 def send_welcome(update, context):
@@ -44,28 +42,11 @@ def last_returns(update, context):
     except:
         update.message.reply_text('Erro no comando: /returns PERÍODOS') 
 
+def optimize(update, context):
+    weights, performace = optimize_portfolio()
 
-def gpt2_reply(update, context):
-    GPT2_API_URL = "https://api-inference.huggingface.co/models/pierreguillou/gpt2-small-portuguese"
-    payload_input_text =  json.dumps(update.message.text)
-
-    response = requests.post(GPT2_API_URL, payload_input_text)
-
-    text = str(response.json()[0])[20:-2]
-
-    update.message.reply_text(text)
-
-def turing_qa(update, context):
-    API_URL = "https://api-inference.huggingface.co/models/mrm8488/bert-base-portuguese-cased-finetuned-squad-v1-pt"
-
-    payload = json.dumps({
-        "context": get_manual_do_membro(),
-        "question": update.message.text
-    })
-
-    response = requests.post(API_URL, payload)
-
-    update.message.reply_text(response.json()['answer'])
+    update.message.reply_text(weights)
+    update.message.reply_text(performace)
 
 def main():
     logger.info("Bot started")
@@ -80,10 +61,8 @@ def main():
     dp.add_handler(CommandHandler("start", send_welcome))
     dp.add_handler(CommandHandler("help", send_help))
 
-    dp.add_handler(CommandHandler("gpt2", gpt2_reply))
-    dp.add_handler(CommandHandler("qa", turing_qa))
-
     dp.add_handler(CommandHandler('returns', last_returns))
+    dp.add_handler(CommandHandler('optimize', optimize))
 
     dp.add_handler(MessageHandler(Filters.text, echo))
 

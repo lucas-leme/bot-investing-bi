@@ -8,3 +8,6 @@ urllib3==1.24.2
 python-telegram-bot==12.8
 investpy==1.0
 pandas==1.1.3
+scipy==1.5.3
+numpy==1.19.0
+pyportfolioopt==1.2.6
