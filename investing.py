@@ -62,4 +62,4 @@ def optimize_portfolio():
 
     performace_formated = 'Retorno esperado: ' + str(expected_return) + '\n' + 'Volatilidade Anual: ' + str(annual_vol) + '\n' + 'Sharpe Ratio: ' + str(sharpe_ratio)
 
-    returns (weights, performace_formated)
+    return (weights, performace_formated)
