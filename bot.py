@@ -5,7 +5,6 @@ import json
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from texts import get_manual_do_membro
 from investing import get_investiments_last_period_performace
 
 TOKEN = os.environ['TELEGRAM_TOKEN']
