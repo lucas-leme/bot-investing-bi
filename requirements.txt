@@ -6,3 +6,5 @@ requests==2.21.0
 six==1.12.0
 urllib3==1.24.2
 python-telegram-bot==12.8
+investpy==1.0
+pandas==1.1.3
