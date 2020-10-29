@@ -42,8 +42,8 @@ def last_returns(update, context):
         update.message.reply_photo(image_path)
 
         os.remove(image_path)
-    except:
-        update.message.reply_text('Erro no comando: /returns PERÍODOS') 
+    except Exception as e:
+        update.message.reply_text(e) 
 
 def optimize(update, context):
     weights, performace = optimize_portfolio()
