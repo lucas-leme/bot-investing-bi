@@ -37,8 +37,7 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def last_returns(update, context):
-    window = int(update.message.text)
-    text = get_investiments_last_period_performace(window)
+    text = get_investiments_last_period_performace()
     update.message.reply_text(text)
 
 def gpt2_reply(update, context):
