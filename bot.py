@@ -37,7 +37,11 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def last_returns(update, context):
-    window = int(update.message.text)
+    window = 1
+    try:
+        window = int(update.message.text[-1])  
+    except:
+        window = 1
     text = get_investiments_last_period_performace(window)
     update.message.reply_text(text)
 
