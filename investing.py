@@ -36,13 +36,23 @@ def get_investiments_returns(pct_change_window=1):
 
     return returns
 
+def get_last_date_available(returns):
+  
+  last_date = str(returns.index[-1])[:10]
+
+  return last_date
+
 def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
 
     last_returns = returns.iloc[-window] * 100
 
-    return last_returns.to_string()
+    report = 'Valores percentuais: \n' + last_returns.to_string() + '\n'
+    report = report + 'Última data disponível: ' + get_last_date_available(returns)
+
+    return report
+
 
 def optimize_portfolio():
 
