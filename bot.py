@@ -37,13 +37,13 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def last_returns(update, context):
-    window = 1
     try:
-        window = int(update.message.text[-1])  
+        window = int(update.message.text[8:])
+        text = get_investiments_last_period_performace(window)
+        update.message.reply_text(text)  
     except:
-        window = 1
-    text = get_investiments_last_period_performace(window)
-    update.message.reply_text(text)
+        update.message.reply_text('Erro no comando: /returns PERÍODOS') 
+
 
 def gpt2_reply(update, context):
     GPT2_API_URL = "https://api-inference.huggingface.co/models/pierreguillou/gpt2-small-portuguese"
