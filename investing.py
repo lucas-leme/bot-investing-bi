@@ -34,9 +34,9 @@ def get_investiments_returns(pct_change_window=1):
     prices = pd.concat(close_prices, axis=1)
     prices = prices.dropna()
 
-    columns_name = stocks_name + funds_name
-    for column_name in columns_name:
-        column_name = column_name[:10]
+    columns_name = []
+    for column_name in (stocks_name + funds_name):
+        columns_name.append(column_name[:10])
 
     prices.columns = columns_name
 
