@@ -37,13 +37,13 @@ def error(update, context):
 def last_returns(update, context):
     try:
         window = int(update.message.text[8:])
-        text, image_path = get_investiments_last_period_performace(window)
+        text = get_investiments_last_period_performace(window)
         update.message.reply_text(text)  
-        update.message.reply_photo(image_path)
+        # update.message.reply_photo(image_path)
 
-        os.remove(image_path)
+        # os.remove(image_path)
     except Exception as e:
-        update.message.reply_text(json.dumps(e)) 
+        update.message.reply_text(str(json.dumps(e))) 
 
 def optimize(update, context):
     weights, performace = optimize_portfolio()

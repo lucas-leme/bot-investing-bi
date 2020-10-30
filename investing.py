@@ -55,12 +55,12 @@ def get_investiments_last_period_performace(window = 1):
     report = report + 'Última data disponível: ' + get_last_date_available(returns)
 
 
-    returns.plot()
+    # returns.plot()
 
-    image_path = 'plt.png'
-    plt.savefig(image_path)
+    # image_path = 'plt.png'
+    # plt.savefig(image_path)
 
-    return report, image_path
+    return report
 
 
 def optimize_portfolio():
