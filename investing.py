@@ -7,12 +7,15 @@ from pypfopt.hierarchical_portfolio import HRPOpt
 import json
 import matplotlib.pyplot as plt
 
+def get_assets_env_var(env_var):
+    assets = os.environ[env_var].split('; ')
+
+    return assets
+
 def get_investiments_returns(pct_change_window=1):
 
-    stocks_name = ['bcff11']
-    funds_name = ['Visia Zarathustra Fundo De Investimento Em Cotas De Fundo De Investimento Multimercado',
-                  'Arx Fundo De Investimento Em Ações',
-                  'Alaska Black Fundo De Investimento Em Cotas De Fundos De Investimento Em Ações Ii - Bdr Nível I']
+    stocks_name = get_assets_env_var('STOCKS')
+    funds_name = get_assets_env_var('FUNDS')
 
 
     today = date.today()
@@ -26,8 +29,6 @@ def get_investiments_returns(pct_change_window=1):
     for fund in funds_name:
         prices = inv.get_fund_historical_data(fund, country='brazil', from_date='01/01/2015', to_date=today)
         close_prices.append(prices.Close)
-    
-    assets_names = ['BCFF11','Zarathustra', 'ARX', 'Alaska']
 
     prices = pd.concat(close_prices, axis=1)
     prices = prices.dropna()
