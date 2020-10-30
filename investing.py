@@ -6,6 +6,7 @@ import numpy as np
 from pypfopt.hierarchical_portfolio import HRPOpt
 import json
 import matplotlib.pyplot as plt
+import os
 
 def get_assets_env_var(env_var):
     assets = os.environ[env_var].split('; ')
