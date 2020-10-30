@@ -36,7 +36,7 @@ def get_investiments_returns(pct_change_window=1):
 
     columns_name = stocks_name + funds_name
     for column_name in columns_name:
-        column_name[:10]
+        column_name = column_name[:10]
 
     prices.columns = columns_name
 
