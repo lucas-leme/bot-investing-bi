@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import os
 
 def get_assets_env_var(env_var):
-    assets = os.environ[env_var].split('; ')
+    assets = os.environ.get(env_var).split('; ')
 
     return assets
 
