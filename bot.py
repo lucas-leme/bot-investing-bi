@@ -43,7 +43,7 @@ def last_returns(update, context):
 
         # os.remove(image_path)
     except Exception as e:
-        update.message.reply_text(str(json.dumps(e))) 
+        update.message.reply_text(e) 
 
 def optimize(update, context):
     weights, performace = optimize_portfolio()

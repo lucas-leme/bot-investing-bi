@@ -33,7 +33,6 @@ def get_investiments_returns(pct_change_window=1):
 
     prices = pd.concat(close_prices, axis=1)
     prices = prices.dropna()
-    prices.columns = assets_names 
 
     returns = prices.pct_change(pct_change_window).dropna()
 
