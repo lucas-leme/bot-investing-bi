@@ -57,7 +57,7 @@ def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
 
-    last_returns = returns.iloc[-1]
+    last_returns = returns.iloc[-1] * 100
     last_vols = returns.std() * np.sqrt(window)
 
     report = 'Retornos: \n' + last_returns.to_string() + '\n\n'

@@ -46,7 +46,7 @@ def last_returns(update, context):
         update.message.reply_text(e) 
 
 def optimize(update, context):
-    risk_threshold = float(update.message.text[8:])
+    risk_threshold = float(update.message.text[9:])
     weights, performace = optimize_portfolio(risk_threshold = risk_threshold)
 
     update.message.reply_text(weights)
