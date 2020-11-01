@@ -15,30 +15,33 @@ def get_assets_env_var(env_var):
 
 def get_investiments_returns(pct_change_window=1):
 
-    stocks_name = get_assets_env_var('STOCKS')
-    funds_name = get_assets_env_var('FUNDS')
+    stocks_name = ['bcff11']
+    funds_name = ['Visia Zarathustra Fundo De Investimento Em Cotas De Fundo De Investimento Multimercado',
+                  'Visia Axis Fundo De Investimento Em Cotas De Fundos De Investimento Multimercado',
+                  'Arx Fundo De Investimento Em Ações',]
+    etfs_name = ['Fundo de Invest Ishares SP 500']
 
 
     today = date.today()
     today = today.strftime("%d/%m/%Y")    
 
     close_prices = []
+    for fund in funds_name:
+        prices = inv.get_fund_historical_data(fund, country='brazil', from_date='01/01/2015', to_date=today)
+        close_prices.append(prices.Close)
+
     for stock in stocks_name:
         prices = inv.get_stock_historical_data(stock=stock, country='brazil', from_date='01/01/2015', to_date=today)
         close_prices.append(prices.Close)
 
-    for fund in funds_name:
-        prices = inv.get_fund_historical_data(fund, country='brazil', from_date='01/01/2015', to_date=today)
+    for etf in etfs_name:
+        prices = inv.get_etf_historical_data('Fundo de Invest Ishares SP 500', country='brazil', from_date='01/01/2015', to_date=today)
         close_prices.append(prices.Close)
 
     prices = pd.concat(close_prices, axis=1)
     prices = prices.dropna()
 
-    columns_name = []
-    for column_name in (stocks_name + funds_name):
-        columns_name.append(column_name[:10])
-
-    prices.columns = columns_name
+    prices.columns = ['Zara', 'Axis', 'Arx', 'BCFF11', 'IVVB11']
 
     returns = prices.pct_change(pct_change_window).dropna()
 
@@ -54,36 +57,37 @@ def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
 
-    last_returns = returns.iloc[-window] * 100
+    last_returns = returns.iloc[-1]
+    last_vols = returns.std() * np.sqrt(window)
 
-    report = 'Valores percentuais: \n' + last_returns.to_string() + '\n'
-    report = report + 'Última data disponível: ' + get_last_date_available(returns)
-
-
-    # returns.plot()
-
-    # image_path = 'plt.png'
-    # plt.savefig(image_path)
+    report = 'Retornos: \n' + last_returns.to_string() + '\n\n'
+    report += 'Volatilidades: \n' +  last_vols.to_string() + '\n'
+    report += 'Última data disponível: ' + get_last_date_available(returns)
 
     return report
 
 
-def optimize_portfolio():
+def optimize_portfolio(riskless_index = 2, risk_threshold = 0.5):
 
     returns = get_investiments_returns()
-    cov_matrix = returns.cov()
 
-    opt = HRPOpt(returns, cov_matrix)
-    weights = opt.optimize('ward')
+    riskless_returns = returns.iloc[:, :riskless_index ]
+    risk_returns = returns.iloc[:, riskless_index: ]
 
-    weights = json.dumps(weights)[1:-1].replace(',', '\n')
+    opt_riskless = HRPOpt(riskless_returns, riskless_returns.cov())
+    weights_riskless = np.array(list(opt_riskless.optimize('ward').values())) * (1 - risk_threshold)
 
-    performace = opt.portfolio_performance()
+    opt_risk = HRPOpt(risk_returns, risk_returns.cov())
+    weights_risk = np.array(list(opt_risk.optimize('ward').values())) * risk_threshold
 
-    expected_return = performace[0]
-    annual_vol = performace[1]
-    sharpe_ratio = performace[2]
+    portfolio_weights = np.array([*weights_riskless, *weights_risk])
+
+    expected_return = np.dot(portfolio_weights, returns.mean()) * 252
+    annual_vol = np.sqrt(np.dot(portfolio_weights.T, np.dot(returns.cov(), portfolio_weights))) * np.sqrt(252)
+    sharpe_ratio = (expected_return - 0.02) / annual_vol
 
     performace_formated = 'Retorno esperado: ' + str(expected_return) + '\n' + 'Volatilidade Anual: ' + str(annual_vol) + '\n' + 'Sharpe Ratio: ' + str(sharpe_ratio)
 
-    return (weights, performace_formated)
+    portfolio_weights_formated = json.dumps(dict(zip(returns.columns, portfolio_weights)))[1:-1].replace(',', '\n')
+
+    return (portfolio_weights_formated, performace_formated)
