@@ -59,7 +59,7 @@ def get_last_date_available(returns):
 def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
-    prices.columns = ['Darius:', 'Axis:', 'Arx:', 'BCFF11:', 'IVVB11:']
+    returns.columns = ['Darius:', 'Axis:', 'Arx:', 'BCFF11:', 'IVVB11:']
 
     last_returns = returns.iloc[-1] * 100
     last_vols = returns.std() * np.sqrt(252/window)
