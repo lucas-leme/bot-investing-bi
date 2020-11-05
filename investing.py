@@ -46,7 +46,7 @@ def get_investiments_returns(pct_change_window=1):
     returns = prices.pct_change(pct_change_window).dropna()
 
     # Zara -> Darius conversion
-    returns.Darius /= 2
+    returns.Darius *= 2/3
 
     return returns
 
@@ -59,9 +59,10 @@ def get_last_date_available(returns):
 def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
+    prices.columns = ['Darius:', 'Axis:', 'Arx:', 'BCFF11:', 'IVVB11:']
 
     last_returns = returns.iloc[-1] * 100
-    last_vols = returns.std() * np.sqrt(window)
+    last_vols = returns.std() * np.sqrt(252/window)
 
     report = 'Retornos: \n' + last_returns.to_string() + '\n\n'
     report += 'Volatilidades: \n' +  last_vols.to_string() + '\n'
