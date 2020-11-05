@@ -7,6 +7,7 @@ from pypfopt.hierarchical_portfolio import HRPOpt
 import json
 import matplotlib.pyplot as plt
 import os
+import seaborn as sns
 
 def get_assets_env_var(env_var):
     assets = os.environ.get(env_var).split('; ')
@@ -60,9 +61,9 @@ def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
 
-    returns.plot()
+    (1 + returns).cumprod().plot()
     plt.plot()
-    plt.savefig('image.png')
+    plt.savefig('returns.png')
 
     returns.columns = ['Darius:', 'Axis:', 'Arx:', 'BCFF11:', 'IVVB11:']
 
@@ -75,10 +76,18 @@ def get_investiments_last_period_performace(window = 1):
 
     return report
 
+def plot_clustermap(returns):
+
+    sns.color_palette("viridis", as_cmap=True)
+
+    cg = sns.clustermap(returns.cov(), method='ward', metric='euclidean', xticklabels=returns.columns, yticklabels=returns.columns, cmap="viridis")
+
+    cg.savefig("clustermap.png")
 
 def optimize_portfolio(riskless_index = 2, risk_threshold = 0.5):
 
     returns = get_investiments_returns()
+    plot_clustermap(returns)
 
     riskless_returns = returns.iloc[:, :riskless_index ]
     risk_returns = returns.iloc[:, riskless_index: ]

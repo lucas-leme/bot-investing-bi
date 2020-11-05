@@ -38,10 +38,12 @@ def last_returns(update, context):
     try:
         window = int(update.message.text[8:])
         text = get_investiments_last_period_performace(window)
+        
+        update.message.reply_photo(photo = open('returns.png', 'rb'))
         update.message.reply_text(text)  
-        update.message.reply_photo(photo = open('image.png', 'rb'))
+        
 
-        os.remove('image.png')
+        os.remove('returns.png')
     except Exception as e:
         update.message.reply_text(e) 
 
@@ -49,8 +51,10 @@ def optimize(update, context):
     risk_threshold = float(update.message.text[9:])
     weights, performace = optimize_portfolio(risk_threshold = risk_threshold)
 
+    update.message.reply_photo(photo = open('clustermap.png', 'rb'))
     update.message.reply_text(weights)
     update.message.reply_text(performace)
+
 
 def main():
     logger.info("Bot started")
