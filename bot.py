@@ -39,9 +39,9 @@ def last_returns(update, context):
         window = int(update.message.text[8:])
         text = get_investiments_last_period_performace(window)
         update.message.reply_text(text)  
-        # update.message.reply_photo(image_path)
+        update.message.reply_photo('/image.png')
 
-        # os.remove(image_path)
+        os.remove('/image.png'h)
     except Exception as e:
         update.message.reply_text(e) 
 

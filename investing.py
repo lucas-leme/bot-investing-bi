@@ -59,6 +59,11 @@ def get_last_date_available(returns):
 def get_investiments_last_period_performace(window = 1):
 
     returns = get_investiments_returns(window)
+
+    returns.plot()
+    plt.plot()
+    plt.savefig('image.png')
+
     returns.columns = ['Darius:', 'Axis:', 'Arx:', 'BCFF11:', 'IVVB11:']
 
     last_returns = returns.iloc[-1] * 100
