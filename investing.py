@@ -78,11 +78,11 @@ def get_investiments_last_period_performace(window = 1):
 
 def plot_clustermap(returns):
 
-    sns.color_palette("viridis", as_cmap=True)
+    sns.color_palette('viridis', as_cmap=True)
 
-    cg = sns.clustermap(returns.cov(), method='ward', metric='euclidean', xticklabels=returns.columns, yticklabels=returns.columns, cmap="viridis")
+    cg = sns.clustermap(returns.cov(), method='ward', metric='euclidean', xticklabels=returns.columns, yticklabels=returns.columns, cmap='viridis')
 
-    cg.savefig("clustermap.png")
+    cg.savefig('clustermap.png')
 
 def optimize_portfolio(riskless_index = 2, risk_threshold = 0.5):
 

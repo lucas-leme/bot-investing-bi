@@ -38,7 +38,7 @@ def last_returns(update, context):
     try:
         window = int(update.message.text[8:])
         text = get_investiments_last_period_performace(window)
-        
+
         update.message.reply_photo(photo = open('returns.png', 'rb'))
         update.message.reply_text(text)  
         
@@ -55,6 +55,7 @@ def optimize(update, context):
     update.message.reply_text(weights)
     update.message.reply_text(performace)
 
+    os.remove('clustermap.png')
 
 def main():
     logger.info("Bot started")
