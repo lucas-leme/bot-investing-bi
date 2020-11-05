@@ -41,7 +41,7 @@ def last_returns(update, context):
         update.message.reply_text(text)  
         update.message.reply_photo('/image.png')
 
-        os.remove('/image.png'h)
+        os.remove('/image.png')
     except Exception as e:
         update.message.reply_text(e) 
 
