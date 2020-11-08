@@ -58,7 +58,7 @@ def optimize(update, context):
     os.remove('clustermap.png')
 
 def backtesting_stats(update, context):
-    risk_threshold = float(update.message.text[11:])
+    risk_threshold = float(update.message.text[12:])
 
     report = backtesting(risk_threshold)
 
