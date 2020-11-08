@@ -137,11 +137,11 @@ def make_rents_image(cumulative_returns):
     plt.savefig('rents.png')
 
 def make_rents_dist_image(returns_model):
-    sns.distplot(returns_model)
+    cg = sns.distplot(returns_model)
     plt.axvline(returns_model.mean()[0], 0, 10, color='red')
     plt.title('Distribuição dos retornos mensais')
     plt.show()
-    plt.savefig('rents_dist.png')
+    cg.savefig('rents_dist.png')
 
 def backtesting(risk_threshold = 0.5):
     """
