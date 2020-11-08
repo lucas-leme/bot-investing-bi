@@ -5,7 +5,7 @@ import json
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from investing import get_investiments_last_period_performace, optimize_portfolio
+from investing import get_investiments_last_period_performace, optimize_portfolio, backtesting
 
 TOKEN = os.environ['TELEGRAM_TOKEN']
 PORT = int(os.environ.get("PORT", "8443"))
@@ -57,6 +57,19 @@ def optimize(update, context):
 
     os.remove('clustermap.png')
 
+def backtesting_stats(update, context):
+    risk_threshold = float(update.message.text[11:])
+
+    report = backtesting(risk_threshold)
+
+    update.message.reply_photo(photo = open('rents.png', 'rb'))
+    update.message.reply_text(report)
+    update.message.reply_photo(photo = open('rents_dist.png', 'rb'))
+
+    os.remove('rents.png')
+    os.remove('rents_dist.png')
+    
+
 def main():
     logger.info("Bot started")
 
@@ -72,6 +85,7 @@ def main():
 
     dp.add_handler(CommandHandler('returns', last_returns))
     dp.add_handler(CommandHandler('optimize', optimize))
+    dp.add_handler(CommandHandler('backtesting', backtesting_stats))
 
     dp.add_handler(MessageHandler(Filters.text, echo))
 
