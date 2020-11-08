@@ -156,16 +156,18 @@ def backtesting(risk_threshold = 0.5):
     cumulative_returns.plot()
     plt.title('Rentabilidade mensal')
     plt.show()
+    plt.savefig('rents.png')
 
     sns.distplot(returns_model)
     plt.axvline(returns_model.mean()[0], 0, 10, color='red')
     plt.title('Distribuição dos retornos mensais')
     plt.show()
+    plt.savefig('rents_dist.png')
 
     report = 'Rentabilidade: ' + str(cumulative_returns.iloc[-1][0]) + '\n'
     report += 'Volatilidade: ' + str(returns_model.std()[0] * np.sqrt(12)) + '\n'
     report += 'Sharpe Ratio: ' + str(((returns_model.mean() * 12 - 0.02) /( returns_model.std() * np.sqrt(12)))[0]) + '\n'
-    report += 'Kolmogorov-Smirnov P-value: ' + str(stats.kstest(returns_model, 'norm')[1]) + '\n'
+    report += 'Kolmogorov-Smirnov P-value: ' + str(scipy.stats.kstest(returns_model, 'norm')[1]) + '\n'
     report += 'Kurtosis: ' + str(scipy.stats.kurtosis(returns_model)[0]) + '\n'
     report += 'Skewness: ' + str(scipy.stats.skew(returns_model)[0]) + '\n'
     report += 'Probabilidade de lucro no ano: ' + str(1 - scipy.stats.norm(returns_model.mean() * 12 , returns_model.std() * np.sqrt(12)).cdf(0)[0])
