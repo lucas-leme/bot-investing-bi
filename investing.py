@@ -137,8 +137,8 @@ def make_rents_image(cumulative_returns):
     plt.savefig('rents.png')
 
 def make_rents_dist_image(returns_model):
-    cg = sns.distplot(returns_model)
-    cg.savefig('rents_dist.png')
+    returns_model.plot.kde()
+    plt.savefig('rents_dist.png')
 
 def backtesting(risk_threshold = 0.5):
     """
