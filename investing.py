@@ -130,6 +130,19 @@ def risk_riskless_period_return(returns_port, date, riskless_index = 2, risk_thr
 
     return last_period_returns
 
+def make_rents_image(cumulative_returns):
+    cumulative_returns.plot()
+    plt.title('Rentabilidade mensal')
+    plt.show()
+    plt.savefig('rents.png')
+
+def make_rents_dist_image(returns_model):
+    sns.distplot(returns_model)
+    plt.axvline(returns_model.mean()[0], 0, 10, color='red')
+    plt.title('Distribuição dos retornos mensais')
+    plt.show()
+    plt.savefig('rents_dist.png')
+
 def backtesting(risk_threshold = 0.5):
     """
     Função que realiza o backtesting do algoritmo
@@ -153,16 +166,9 @@ def backtesting(risk_threshold = 0.5):
 
     cumulative_returns = (1 + returns_model).cumprod()
 
-    cumulative_returns.plot()
-    plt.title('Rentabilidade mensal')
-    plt.show()
-    plt.savefig('rents.png')
+    make_rents_image(cumulative_returns)
 
-    sns.distplot(returns_model)
-    plt.axvline(returns_model.mean()[0], 0, 10, color='red')
-    plt.title('Distribuição dos retornos mensais')
-    plt.show()
-    plt.savefig('rents_dist.png')
+    make_rents_dist_image(returns_model)
 
     report = 'Rentabilidade: ' + str(cumulative_returns.iloc[-1][0]) + '\n'
     report += 'Volatilidade: ' + str(returns_model.std()[0] * np.sqrt(12)) + '\n'
