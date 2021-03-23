@@ -43,7 +43,7 @@ def get_investiments_returns(pct_change_window=1):
     prices = pd.concat(close_prices, axis=1)
     prices = prices.dropna()
 
-    prices.columns = ['Darius', 'Axis', 'Arx', 'BCFF11', 'IVVB11']
+    prices.columns = ['Darius', 'Axis', 'Arx', 'BTG', 'IVVB11']
 
     returns = prices.pct_change(pct_change_window).dropna()
 
