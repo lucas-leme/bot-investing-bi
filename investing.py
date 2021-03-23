@@ -17,7 +17,7 @@ def get_assets_env_var(env_var):
 
 def get_investiments_returns(pct_change_window=1):
 
-    stocks_name = ['bcff11']
+    stocks_name = ['bpac11']
     funds_name = ['Visia Zarathustra Fundo De Investimento Em Cotas De Fundo De Investimento Multimercado',
                   'Visia Axis Fundo De Investimento Em Cotas De Fundos De Investimento Multimercado',
                   'Arx Fundo De Investimento Em Ações',]
